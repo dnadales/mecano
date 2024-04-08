@@ -1,3 +1,6 @@
 [submodule "cardano-ledger"]
 	path = cardano-ledger
 	url = https://github.com/IntersectMBO/cardano-ledger
+[submodule "ouroboros-consensus"]
+	path = ouroboros-consensus
+	url = https://github.com/IntersectMBO/ouroboros-consensus
