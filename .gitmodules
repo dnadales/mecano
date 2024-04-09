@@ -10,3 +10,9 @@
 [submodule "cardano-node"]
 	path = cardano-node
 	url = https://github.com/IntersectMBO/cardano-node
+[submodule "cardano-api"]
+	path = cardano-api
+	url = https://github.com/IntersectMBO/cardano-api
+[submodule "cardano-cli"]
+	path = cardano-cli
+	url = https://github.com/IntersectMBO/cardano-cli
