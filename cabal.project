@@ -90,3 +90,9 @@ packages:
   ./ouroboros-network/ouroboros-network-testing
   ./ouroboros-network/ntp-client
   ./ouroboros-network/cardano-client
+
+  -- API packages
+  ./cardano-api/cardano-api
+
+  -- CLI packages
+  ./cardano-cli/cardano-cli
