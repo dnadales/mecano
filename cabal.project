@@ -75,3 +75,18 @@ packages:
   ./ouroboros-consensus/ouroboros-consensus-diffusion
   ./ouroboros-consensus/sop-extras
   ./ouroboros-consensus/strict-sop-core
+
+  --
+  -- Network packages
+  --
+  ./ouroboros-network/cardano-ping
+  ./ouroboros-network/monoidal-synchronisation
+  ./ouroboros-network/network-mux
+  ./ouroboros-network/ouroboros-network
+  ./ouroboros-network/ouroboros-network-api
+  ./ouroboros-network/ouroboros-network-framework
+  ./ouroboros-network/ouroboros-network-mock
+  ./ouroboros-network/ouroboros-network-protocols
+  ./ouroboros-network/ouroboros-network-testing
+  ./ouroboros-network/ntp-client
+  ./ouroboros-network/cardano-client
