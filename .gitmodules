@@ -4,3 +4,6 @@
 [submodule "ouroboros-consensus"]
 	path = ouroboros-consensus
 	url = https://github.com/IntersectMBO/ouroboros-consensus
+[submodule "ouroboros-network"]
+	path = ouroboros-network
+	url = https://github.com/IntersectMBO/ouroboros-network
