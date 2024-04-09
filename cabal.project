@@ -65,3 +65,13 @@ packages:
   ./cardano-ledger/eras/byron/ledger/impl/test
   ./cardano-ledger/eras/byron/crypto
   ./cardano-ledger/eras/byron/crypto/test
+
+  --
+  -- Consensus packages
+  --
+  ./ouroboros-consensus/ouroboros-consensus
+  ./ouroboros-consensus/ouroboros-consensus-cardano
+  ./ouroboros-consensus/ouroboros-consensus-protocol
+  ./ouroboros-consensus/ouroboros-consensus-diffusion
+  ./ouroboros-consensus/sop-extras
+  ./ouroboros-consensus/strict-sop-core
