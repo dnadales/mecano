@@ -7,3 +7,6 @@
 [submodule "ouroboros-network"]
 	path = ouroboros-network
 	url = https://github.com/IntersectMBO/ouroboros-network
+[submodule "cardano-node"]
+	path = cardano-node
+	url = https://github.com/IntersectMBO/cardano-node
