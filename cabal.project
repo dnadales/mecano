@@ -91,8 +91,25 @@ packages:
   ./ouroboros-network/ntp-client
   ./ouroboros-network/cardano-client
 
+  --
   -- API packages
+  --
   ./cardano-api/cardano-api
 
+  --
   -- CLI packages
+  --
   ./cardano-cli/cardano-cli
+
+  --
+  -- Node packages
+  --
+  ./cardano-node/cardano-node
+  ./cardano-node/cardano-node-capi
+  ./cardano-node/cardano-node-chairman
+  ./cardano-node/cardano-submit-api
+  ./cardano-node/cardano-testnet
+  ./cardano-node/cardano-tracer
+  ./cardano-node/trace-dispatcher
+  ./cardano-node/trace-forward
+  ./cardano-node/trace-resources
