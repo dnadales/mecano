@@ -18,7 +18,7 @@ for repo in cardano-cli cardano-api cardano-ledger ouroboros-consensus ouroboros
             echo "$pkgs"
             read -r -p "Tell me which one should I look for in CHaP/Hackage: " response
         fi
-        ver=$(echo "$pkgs" | grep "$response" | rev | cut -d'-' -f1 | rev)
+        ver=$(echo "$pkgs" | grep "$response-[0-9]" | rev | cut -d'-' -f1 | rev)
         echo -e "\n> get-version $response $ver"
         gv=$(get-version $response $ver)
         printf "%s\n\n" "$gv"
