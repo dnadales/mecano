@@ -20,8 +20,8 @@ print-ver() {
         
     done
 }
+
 for pkg in cardano-node cardano-cli cardano-api ouroboros-consensus ouroboros-network cardano-ledger ; do
   print-ver $pkg
 done
 
-cabal build exe:cardano-node $@
