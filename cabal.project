@@ -32,6 +32,9 @@ package bitvec
 package plutus-scripts-bench
   haddock-options: "--optghc=-fplugin-opt PlutusTx.Plugin:defer-errors"
 
+allow-newer:
+  ouroboros-network-protocols:cardano-slotting
+
 packages:
   --
   -- Ledger packages

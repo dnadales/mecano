@@ -1,0 +1,27 @@
+#!/bin/bash
+
+printf "You are going to build:\n"
+print-ver() {
+    
+    printf "\t$1: %s\n" $(cd $1; git rev-parse HEAD) 
+    pkgs=$(cd $1; awk '
+    BEGIN { v=0 }
+    /^ *--/{next}
+    /^packages:/{v=1}
+    !/^ /&& !/^packages:/ && !/^$/{v=0}
+    /.*/{if (v) { print $NF }}' cabal.project | grep -v "packages:")
+    for p in $pkgs; do
+        (cd $1/$p
+        cblfile=$(find . -maxdepth 1 -type f -name "*.cabal")
+        v=$(grep "^version:" $cblfile)
+        printf "\t\t%s: \e[0;32m%s\e[0m\n" $(echo $cblfile | cut -d'/' -f2 | cut -d'.' -f1) $(echo "$v" | rev | cut -d' ' -f1 | rev)
+        )
+        
+        
+    done
+}
+for pkg in cardano-node cardano-cli cardano-api ouroboros-consensus ouroboros-network cardano-ledger ; do
+  print-ver $pkg
+done
+
+cabal build exe:cardano-node $@

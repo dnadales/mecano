@@ -1,0 +1,28 @@
+#!/bin/bash 
+
+pkg=$1; version=$2;
+printf "\e[0;32mIn CHaP\e[0m\n"
+if [[ $(curl -s -I "https://chap.intersectmbo.org/package/$pkg-$version/" | head -n 1|cut -d$' ' -f2) == "404" ]]; then
+    printf "\t\e[0;31mNot found\e[0m\n"
+else
+    chap=$(curl -s "https://chap.intersectmbo.org/package/$pkg-$version/")
+    repo=$(echo "$chap" | grep -A4 "Source" | tail -n1 | tr -d ' ' | sed 's_.*">__g' | sed 's_</a>__g')
+    sha=$(echo "$chap" | grep -A1 "Commit hash" | tail -n1 | tr -d ' ' | sed 's_<dd>__g' | sed 's_</dd>__g')
+    printf "\tGit repo: \e[0;32m%s\e[0m\n" "$repo"
+    printf "\tGit sha:  \e[0;32m%s\e[0m\n" "$sha"
+    echo "$chap" | sed -n "/Timestamp/,/Dependencies/p" | grep "<p>" | tr -d ' ' | sed 's/<p>//g' | sed 's/<\/p>//g' | sort | sed '/^None$/d' | paste <(printf "\tAdded on:\n"; seq 1 9 | sed 's/^\(.*\)$/\tRevision \1:/g') - | awk "NF==3" | sed '$ s/^\(.*\)/\x1b[32m\1\x1b[0m/g'
+fi
+
+printf "\e[0;32mIn Hackage\e[0m\n"
+if [[ $(curl -s -I "https://hackage.haskell.org/package/$pkg-$version/revisions/" | head -n 1 | cut -d$' ' -f2) == "404" ]]; then
+    printf "\t\e[0;31mNot found\e[0m\n"
+else
+    repos=$(curl -s -H 'Accept: application/html' "https://hackage.haskell.org/package/$pkg-$version" | grep -A1 "Source&nbsp;repo" | tail -n1 | sed 's_<br />_\n_g' | sed 's_.*">__g')
+    printf "\tGit repo: \e[0;32m%s\e[0m\n" "$(echo "$repos" | head -n1 | sed 's_<.*$__g')"
+    if [[ $(echo "$repos" | wc -l) == 2 ]]; then
+        printf "\tThis tag: \e[0;32m%s\e[0m\n" "$(echo "$repos" | tail -n1 | sed 's_.*tag __g' | sed 's_).*$__g')"
+    fi
+    revisions=$(curl -s -H 'Accept: application/json' "https://hackage.haskell.org/package/$pkg-$version/revisions/")
+    echo "$revisions" | jq -r '[.[] | .time][]' | paste <(printf "\tAdded on:\n"; seq 1 9 | sed 's/^\(.*\)$/\tRevision \1:/g') - | awk "NF == 3" | sed '$ s/^\(.*\)/\x1b[32m\1\x1b[0m/g'
+fi
+
