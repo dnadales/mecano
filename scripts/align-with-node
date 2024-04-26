@@ -14,7 +14,7 @@ for repo in cardano-cli cardano-api cardano-ledger ouroboros-consensus ouroboros
         if [[ $(echo "$pkgs" | wc -l) == 1 ]]; then
             response=$(echo "$pkgs"| rev | cut -d'-' -f2- | rev)
         else
-            echo "Cabal plan mentions several packages: "
+            echo -e "\nCabal plan mentions several packages: "
             echo "$pkgs"
             read -r -p "Tell me which one should I look for in CHaP/Hackage: " response
         fi
