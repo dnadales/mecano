@@ -1,0 +1,29 @@
+#!/bin/bash
+
+plan=$(cd cardano-node; cabal build exe:cardano-node --dry-run 2>&1 >/dev/null; cabal-plan)
+
+for repo in cardano-cli cardano-api cardano-ledger ouroboros-consensus ouroboros-network; do
+    printf "\n========= \e[0;32m%s\e[0m\n" $repo
+    stanza=$(grep -A1 "location: https://github.com/IntersectMBO/$repo" cardano-node/cabal.project)
+    if [ $? -eq 0 ]; then
+        tag=$(echo "$stanza" | tail -n1 | rev | cut -d' ' -f1 | rev)
+        printf "\nChecked out at %s from s-r-p\n\n" $tag
+        (cd $repo; git checkout $tag)
+    else 
+        pkgs=$(echo "$plan" | grep "UnitId \"$repo" | cut -d' ' -f2 | tr -d '\"' | rev | cut -d'-' -f2- | rev | grep "^.*[0-9]$")
+        if [[ $(echo "$pkgs" | wc -l) == 1 ]]; then
+            response=$(echo "$pkgs"| rev | cut -d'-' -f2- | rev)
+        else
+            echo "Cabal plan mentions several packages: "
+            echo "$pkgs"
+            read -r -p "Tell me which one should I look for in CHaP/Hackage: " response
+        fi
+        ver=$(echo "$pkgs" | grep "$response" | rev | cut -d'-' -f1 | rev)
+        echo -e "\n> get-version $response $ver"
+        gv=$(get-version $response $ver)
+        printf "%s\n\n" "$gv"
+        tag=$( echo "$gv" | grep "sha:" | sed 's/\x1B\[[0-9;]\{1,\}[A-Za-z]//g' | rev | cut -d' ' -f1 | rev)
+        printf "Checked out at %s from CHaP/Hackage\n\n" $tag
+        (cd $repo; git checkout $tag)
+    fi
+done
